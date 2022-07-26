@@ -1,10 +1,23 @@
 import React from 'react'
 
-export default function LibrarySong({song}) {
-    console.log(song);
+export default function LibrarySong({song, songs, setCurrentSong, id, audioRef, isPlaying}) {
+    const songSelectHandler = async() =>{
+    
+        await setCurrentSong(song);
+        audioRef.current.play();
+        //check if this song is playing
+        if(isPlaying){
+            const playPromise = audioRef.current.play();
+            if(playPromise !== undefined){
+                playPromise.then((audio) =>{
+                    audioRef.current.paly();
+                })
+            }
+        }
+    }
     return (
     
-        <div className="library-song">
+        <div onClick={songSelectHandler} className="library-song">
             <img src={song.cover} />
             <div className="song-discription">
                 <h3>{song.name}</h3>
